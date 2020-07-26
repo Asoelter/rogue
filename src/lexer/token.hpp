@@ -56,4 +56,29 @@ const T& DerivedToken<T, ForIdGen>::value() const
     return value_;
 }
 
+template<typename T, T V>
+EnumeratedToken<T, V>::EnumeratedToken(size_t line, size_t column)
+    : Token(line, column)
+{
+
+}
+
+template<typename T, T V>
+type_id EnumeratedToken<T, V>::type() const
+{
+    return TypeIdGenerator<EnumeratedToken<T, V>>::generate();
+}
+
+template<typename T, T V>
+std::string EnumeratedToken<T, V>::toString() const
+{
+    return lexer::toString(V);
+}
+
+template<typename T, T V>
+const T EnumeratedToken<T, V>::value() const
+{
+    return V;
+}
+
 LEXER_NAMESPACE_END

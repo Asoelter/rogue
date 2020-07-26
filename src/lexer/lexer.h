@@ -36,6 +36,7 @@ public:
     std::vector<std::unique_ptr<Token>> lex(const std::string& fileName);
 private:
     std::vector<Rule> rules_;
+    std::vector<Rule*> matches_;
 };
 
 LEXER_NAMESPACE_END

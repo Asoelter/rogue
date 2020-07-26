@@ -10,4 +10,3 @@ if(WIN32)
 	target_link_libraries(${PROJECT_NAME} INTERFACE "win32")
 	target_include_directories(${PROJECT_NAME} INTERFACE "win32")
 endif(WIN32)
-

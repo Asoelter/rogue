@@ -2,9 +2,12 @@
 #define TOKEN_H
 
 #include <string>
+
 #include <util/type_id_generator.hpp>
 
+#include "keyword.h"
 #include "namespace.h"
+#include "symbol.h"
 
 LEXER_NAMESPACE_BEGIN
 
@@ -44,7 +47,7 @@ public:
     DerivedToken(const DerivedToken& rhs) = default;
     DerivedToken(DerivedToken&& rhs) = default;
 
-    virtual ~DerivedToken() = default;
+    ~DerivedToken() override = default;
 
     DerivedToken& operator=(const DerivedToken& rhs) = default;
     DerivedToken& operator=(DerivedToken&& rhs) = default;
@@ -63,9 +66,61 @@ private:
 
 struct __IdentifierIdType{};
 
+template<Symbol>
+struct __SymbolIdType {};
+
+template<typename T, T V>
+class EnumeratedToken : public Token
+{
+public:
+    EnumeratedToken(size_t line, size_t column);
+    EnumeratedToken(const EnumeratedToken& rhs) = default;
+    EnumeratedToken(EnumeratedToken&& rhs) = default;
+
+    ~EnumeratedToken() override = default;
+
+    EnumeratedToken& operator=(const EnumeratedToken& rhs) = default;
+    EnumeratedToken& operator=(EnumeratedToken&& rhs) = default;
+
+    [[nodiscard]]
+    type_id type() const override;
+
+    [[nodiscard]]
+    std::string toString() const override;
+
+    const T value() const;
+};
+
 using IntLitToken = DerivedToken<int>;
 using StringLitToken = DerivedToken<std::string>;
 using IdentifierToken = DerivedToken<std::string, __IdentifierIdType>;
+
+template<Symbol S>
+using SymbolToken = EnumeratedToken<Symbol, S>;
+
+using LParenToken    = SymbolToken<Symbol::LParen>;
+using RParenToken    = SymbolToken<Symbol::RParen>;
+using LCurlyToken    = SymbolToken<Symbol::LCurly>;
+using RCurlyToken    = SymbolToken<Symbol::RCurly>;
+using CommaToken     = SymbolToken<Symbol::Comma>;
+using DotToken       = SymbolToken<Symbol::Dot>;
+using SemiColonToken = SymbolToken<Symbol::SemiColon>;
+using PlusToken      = SymbolToken<Symbol::Plus>;
+using MinusToken     = SymbolToken<Symbol::Minus>;
+using EqualsToken    = SymbolToken<Symbol::Equals>;
+
+template<Keyword K>
+using KeywordToken = EnumeratedToken<Keyword, K>;
+
+using IfToken    = KeywordToken<Keyword::If>;
+using ElseToken  = KeywordToken<Keyword::Else>;
+using WhileToken = KeywordToken<Keyword::While>;
+using ForToken   = KeywordToken<Keyword::For>;
+using IntToken   = KeywordToken<Keyword::Int>;
+using CharToken  = KeywordToken<Keyword::Char>;
+using BoolToken  = KeywordToken<Keyword::Bool>;
+using TrueToken  = KeywordToken<Keyword::True>;
+using FalseToken = KeywordToken<Keyword::False>;
 
 LEXER_NAMESPACE_END
 
