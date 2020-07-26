@@ -1,9 +1,5 @@
 #include "lexer.h"
 
-#include <iostream>
-#include <fstream>
-#include <string_view>
-
 #include <util/file_io.h>
 
 #include "token.h"
@@ -55,7 +51,6 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 
             chunkStop -= 1; //rewind to include first non-match in the next chunk
             chunkStart = chunkStop;
-            numMatches = 0;
             matches_.clear();
         }
     }

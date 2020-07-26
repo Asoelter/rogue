@@ -43,7 +43,8 @@ template<typename T, typename ForIdGen = T>
 class DerivedToken : public Token
 {
 public:
-    DerivedToken(size_t line, size_t column, const T & value);
+    DerivedToken(size_t line, size_t column, const T& value);
+    DerivedToken(size_t line, size_t column, T&& value);
     DerivedToken(const DerivedToken& rhs) = default;
     DerivedToken(DerivedToken&& rhs) = default;
 
@@ -63,11 +64,6 @@ public:
 private:
     T value_;
 };
-
-struct __IdentifierIdType{};
-
-template<Symbol>
-struct __SymbolIdType {};
 
 template<typename T, T V>
 class EnumeratedToken : public Token
@@ -90,6 +86,8 @@ public:
 
     const T value() const;
 };
+
+struct __IdentifierIdType{};
 
 using IntLitToken = DerivedToken<int>;
 using StringLitToken = DerivedToken<std::string>;

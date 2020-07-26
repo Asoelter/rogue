@@ -13,25 +13,29 @@ class TokenGenerator
 public:
     virtual ~TokenGenerator() = default;
 
-    virtual std::unique_ptr<Token> generate(size_t line, size_t column, const std::string & value) = 0;
+    virtual std::unique_ptr<Token> generate(size_t line, size_t column, const std::string& value) = 0;
+    virtual std::unique_ptr<Token> generate(size_t line, size_t column, std::string&& value) = 0;
 };
 
 class IntLitTokenGenerator : public TokenGenerator
 {
 public:
     std::unique_ptr<Token> generate(size_t line, size_t column, const std::string& value) override;
+    std::unique_ptr<Token> generate(size_t line, size_t column, std::string&& value) override;
 };
 
 class StringLitTokenGenerator : public TokenGenerator
 {
 public:
     std::unique_ptr<Token> generate(size_t line, size_t column, const std::string& value) override;
+    std::unique_ptr<Token> generate(size_t line, size_t column, std::string&& value) override;
 };
 
 class IdTokenGenerator : public TokenGenerator
 {
 public:
     std::unique_ptr<Token> generate(size_t line, size_t column, const std::string& value) override;
+    std::unique_ptr<Token> generate(size_t line, size_t column, std::string&& value) override;
 };
 
 template<typename T, T V>
@@ -39,6 +43,11 @@ class EnumeratedTokenGenerator : public TokenGenerator
 {
 public:
     std::unique_ptr<Token> generate(size_t line, size_t column, const std::string&) override
+    {
+        return std::make_unique<EnumeratedToken<T, V>>(line, column);
+    }
+
+    std::unique_ptr<Token> generate(size_t line, size_t column, std::string&&) override
     {
         return std::make_unique<EnumeratedToken<T, V>>(line, column);
     }

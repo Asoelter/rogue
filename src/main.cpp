@@ -1,4 +1,5 @@
 #include <cassert>
+#include <chrono>
 #include <iostream>
 
 #include <lexer/lexer.h>
@@ -70,12 +71,19 @@ int main(int argc, char** argv)
         std::cout << e.what() << std::endl;
     }
 
+    auto const startTime = std::chrono::system_clock::now();
+
     auto const tokens = lexer.lex("../../../../test.rogue");
+
+    auto const endTime = std::chrono::system_clock::now();
+    auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
     for (auto const& token : tokens)
     {
         std::cout << token->toString() << ' ';
     }
+
+    std::cout << "lexing took " << duration << " ms" << std::endl;
 
     std::cin.get();
     return 0;

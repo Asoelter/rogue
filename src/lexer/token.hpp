@@ -20,9 +20,17 @@ inline size_t Token::column() const
 }
 
 template<typename T, typename ForIdGen>
-DerivedToken<T, ForIdGen>::DerivedToken(size_t line, size_t column, const T & value)
+DerivedToken<T, ForIdGen>::DerivedToken(size_t line, size_t column, const T& value)
     : Token(line, column)
     , value_(value)
+{
+    
+}
+
+template<typename T, typename ForIdGen>
+DerivedToken<T, ForIdGen>::DerivedToken(size_t line, size_t column, T&& value)
+    : Token(line, column)
+    , value_(std::move(value))
 {
     
 }
