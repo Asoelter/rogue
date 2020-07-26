@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-add_executable (rogue  main.cpp "util/type_id_generator.hpp")
+add_executable (rogue  main.cpp)
 
 if(CMAKE_CONFIGURATION_TYPES STREQUAL "Debug")
 	add_compile_definitions(DEBUG=1)
@@ -18,3 +18,4 @@ endfunction()
 
 addDirectory(lexer)
 addDirectory(util)
+addDirectory(platform)

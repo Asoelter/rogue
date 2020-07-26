@@ -26,14 +26,17 @@ public:
     [[nodiscard]]
     virtual std::string toString() const = 0;
 
+    [[nodiscard]]
     size_t line() const;
+
+    [[nodiscard]]
     size_t column() const;
 private:
     size_t line_;
     size_t column_;
 };
 
-template<typename T>
+template<typename T, typename ForIdGen = T>
 class DerivedToken : public Token
 {
 public:
@@ -58,9 +61,11 @@ private:
     T value_;
 };
 
+struct __IdentifierIdType{};
+
 using IntLitToken = DerivedToken<int>;
 using StringLitToken = DerivedToken<std::string>;
-using IdentifierToken = DerivedToken<std::string>;
+using IdentifierToken = DerivedToken<std::string, __IdentifierIdType>;
 
 LEXER_NAMESPACE_END
 

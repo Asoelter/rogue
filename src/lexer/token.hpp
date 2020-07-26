@@ -2,39 +2,39 @@
 
 LEXER_NAMESPACE_BEGIN
 
-Token::Token(size_t line, size_t column)
+inline Token::Token(size_t line, size_t column)
     : line_(line)
     , column_(column)
 {
     
 }
 
-size_t Token::line() const
+inline size_t Token::line() const
 {
     return line_;
 }
 
-size_t Token::column() const
+inline size_t Token::column() const
 {
     return column_;
 }
 
-template<typename T>
-DerivedToken<T>::DerivedToken(size_t line, size_t column, const T & value)
+template<typename T, typename ForIdGen>
+DerivedToken<T, ForIdGen>::DerivedToken(size_t line, size_t column, const T & value)
     : Token(line, column)
     , value_(value)
 {
     
 }
 
-template<typename T>
-type_id DerivedToken<T>::type() const 
+template<typename T, typename ForIdGen>
+type_id DerivedToken<T, ForIdGen>::type() const 
 {
-    return TypeIdGenerator<DerivedToken<T>>::generate();
+    return TypeIdGenerator<DerivedToken<T, ForIdGen>>::generate();
 }
 
-template<typename T>
-std::string DerivedToken<T>::toString() const 
+template<typename T, typename ForIdGen>
+std::string DerivedToken<T, ForIdGen>::toString() const 
 {
     if constexpr (std::is_arithmetic_v<T>)
     {
@@ -50,8 +50,8 @@ std::string DerivedToken<T>::toString() const
     }
 }
 
-template<typename T>
-const T& DerivedToken<T>::value() const
+template<typename T, typename ForIdGen>
+const T& DerivedToken<T, ForIdGen>::value() const
 {
     return value_;
 }

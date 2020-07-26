@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "namespace.h"
+#include "token_generator.h"
 
 LEXER_NAMESPACE_BEGIN
 
@@ -15,13 +16,26 @@ class Token;
 class Lexer
 {
 public:
+    struct Rule
+    {
+        Rule(const char * p, std::unique_ptr<TokenGenerator>&& g)
+            : pattern(p)
+            , generator(std::move(g))
+        {
+            
+        }
+
+        std::regex pattern;
+        std::unique_ptr<TokenGenerator> generator;
+    };
+
     Lexer() = default;
 
-    void addRule(std::string&& rule);
+    void addRule(Rule&& rule);
 
-    //std::vector<std::unique_ptr<Token>> lex(const std::string& fileName);
+    std::vector<std::unique_ptr<Token>> lex(const std::string& fileName);
 private:
-    std::vector<std::regex> rules_;
+    std::vector<Rule> rules_;
 };
 
 LEXER_NAMESPACE_END
