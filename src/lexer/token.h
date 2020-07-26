@@ -106,8 +106,18 @@ using CommaToken     = SymbolToken<Symbol::Comma>;
 using DotToken       = SymbolToken<Symbol::Dot>;
 using SemiColonToken = SymbolToken<Symbol::SemiColon>;
 using PlusToken      = SymbolToken<Symbol::Plus>;
+using PlusTokenEq    = SymbolToken<Symbol::PlusEq>;
 using MinusToken     = SymbolToken<Symbol::Minus>;
+using MinusTokenEq   = SymbolToken<Symbol::MinusEq>;
+using TimesToken     = SymbolToken<Symbol::Times>;
+using TimesEqTokenEq = SymbolToken<Symbol::TimesEq>;
+using DivToken       = SymbolToken<Symbol::Div>;
+using DivEqTokenEq   = SymbolToken<Symbol::DivEq>;
 using EqualsToken    = SymbolToken<Symbol::Equals>;
+using LessToken      = SymbolToken<Symbol::Less>;
+using LessEqToken    = SymbolToken<Symbol::Equals>;
+using GreaterToken   = SymbolToken<Symbol::Greater>;
+using GreaterEqToken = SymbolToken<Symbol::GreaterEq>;
 
 template<Keyword K>
 using KeywordToken = EnumeratedToken<Keyword, K>;

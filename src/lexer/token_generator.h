@@ -55,8 +55,18 @@ using CommaTokenGenerator     = SymbolTokenGenerator<Symbol::Comma>;
 using DotTokenGenerator       = SymbolTokenGenerator<Symbol::Dot>;
 using SemiColonTokenGenerator = SymbolTokenGenerator<Symbol::SemiColon>;
 using PlusTokenGenerator      = SymbolTokenGenerator<Symbol::Plus>;
+using PlusEqTokenGenerator    = SymbolTokenGenerator<Symbol::PlusEq>;
 using MinusTokenGenerator     = SymbolTokenGenerator<Symbol::Minus>;
+using MinusEqTokenGenerator   = SymbolTokenGenerator<Symbol::MinusEq>;
+using TimesTokenGenerator     = SymbolTokenGenerator<Symbol::Times>;
+using TimesEqTokenGenerator   = SymbolTokenGenerator<Symbol::TimesEq>;
+using DivTokenGenerator       = SymbolTokenGenerator<Symbol::Div>;
+using DivEqTokenGenerator     = SymbolTokenGenerator<Symbol::DivEq>;
 using EqualsTokenGenerator    = SymbolTokenGenerator<Symbol::Equals>;
+using LessTokenGenerator      = SymbolTokenGenerator<Symbol::Less>;
+using LessEqTokenGenerator    = SymbolTokenGenerator<Symbol::LessEq>;
+using GreaterTokenGenerator   = SymbolTokenGenerator<Symbol::Greater>;
+using GreaterEqTokenGenerator = SymbolTokenGenerator<Symbol::GreaterEq>;
 
 template<Keyword K>
 using KeywordTokenGenerator = EnumeratedTokenGenerator<Keyword, K>;

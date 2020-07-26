@@ -17,8 +17,18 @@ enum class Symbol
     Dot, 
     SemiColon, 
     Plus,
+    PlusEq,
     Minus,
-    Equals
+    MinusEq,
+    Times,
+    TimesEq,
+    Div,
+    DivEq,
+    Equals,
+    Less,
+    LessEq,
+    Greater,
+    GreaterEq
 };
 
 inline std::string toString(Symbol s)
@@ -33,8 +43,18 @@ inline std::string toString(Symbol s)
     case Symbol::Dot:       return "Dot";
     case Symbol::SemiColon: return "SemiColon";
     case Symbol::Plus:      return "Plus";
+    case Symbol::PlusEq:    return "PlusEq";
     case Symbol::Minus:     return "Minus";
+    case Symbol::MinusEq:   return "MinusEq";
+    case Symbol::Times:     return "Times";
+    case Symbol::TimesEq:   return "TimesEq";
+    case Symbol::Div:       return "Div";
+    case Symbol::DivEq:     return "DivEq";
     case Symbol::Equals:    return "Equals";
+    case Symbol::Less:      return "Less";
+    case Symbol::LessEq:    return "LessEq";
+    case Symbol::Greater:   return "Greater";
+    case Symbol::GreaterEq: return "GreaterEq";
     default:                return "Unkown";
     }
 }

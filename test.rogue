@@ -1,4 +1,29 @@
 int main()
 {
-	return 2 + 2;
+	int i = 5;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+	i = i + 1;
+
+	if(i < 3939)
+	{
+		i *= 0;
+	}
+
+	return i + 1;
 }

@@ -18,11 +18,21 @@ int main(int argc, char** argv)
     auto const LCurlyPattern = "\\{";
     auto const RCurlyPattern = "\\}";
     auto const CommaPattern = ",";
-    auto const DotToken = "\\.";
-    auto const SemiColonToken = ";";
-    auto const PlusToken = "\\+";
-    auto const MinusToken = "-";
-    auto const EqualsToken = "=";
+    auto const DotPattern = "\\.";
+    auto const SemiColonPattern = ";";
+    auto const PlusPattern = "\\+";
+    auto const PlusEqPattern = "\\+=";
+    auto const MinusPattern = "-";
+    auto const MinusEqPattern = "-=";
+    auto const TimesPattern = "\\*";
+    auto const TimesEqPattern = "\\*=";
+    auto const DivPattern = "/";
+    auto const DivEqPattern = "/=";
+    auto const EqualsPattern = "=";
+    auto const LessPattern = "<";
+    auto const LessEqPattern = "<=";
+    auto const GreaterPattern = ">";
+    auto const GreaterEqPattern = ">=";
 
     auto lexer = lexer::Lexer();
 
@@ -39,11 +49,21 @@ int main(int argc, char** argv)
         lexer.addRule({ LCurlyPattern, std::make_unique<lexer::LCurlyTokenGenerator>() });
         lexer.addRule({ RCurlyPattern, std::make_unique<lexer::RCurlyTokenGenerator>() });
         lexer.addRule({ CommaPattern, std::make_unique<lexer::CommaTokenGenerator>() });
-        lexer.addRule({ DotToken, std::make_unique<lexer::DotTokenGenerator>() });
-        lexer.addRule({ SemiColonToken, std::make_unique<lexer::SemiColonTokenGenerator>() });
-        lexer.addRule({ PlusToken, std::make_unique<lexer::PlusTokenGenerator>() });
-        lexer.addRule({ MinusToken, std::make_unique<lexer::MinusTokenGenerator>() });
-        lexer.addRule({ EqualsToken, std::make_unique<lexer::EqualsTokenGenerator>() });
+        lexer.addRule({ DotPattern , std::make_unique<lexer::DotTokenGenerator>() });
+        lexer.addRule({ SemiColonPattern , std::make_unique<lexer::SemiColonTokenGenerator>() });
+        lexer.addRule({ PlusPattern , std::make_unique<lexer::PlusTokenGenerator>() });
+        lexer.addRule({ PlusEqPattern , std::make_unique<lexer::PlusEqTokenGenerator>() });
+        lexer.addRule({ MinusPattern , std::make_unique<lexer::MinusTokenGenerator>() });
+        lexer.addRule({ MinusEqPattern , std::make_unique<lexer::MinusEqTokenGenerator>() });
+        lexer.addRule({ TimesPattern , std::make_unique<lexer::TimesTokenGenerator>() });
+        lexer.addRule({ TimesEqPattern , std::make_unique<lexer::TimesEqTokenGenerator>() });
+        lexer.addRule({ DivPattern , std::make_unique<lexer::DivTokenGenerator>() });
+        lexer.addRule({ DivEqPattern , std::make_unique<lexer::DivEqTokenGenerator>() });
+        lexer.addRule({ EqualsPattern , std::make_unique<lexer::EqualsTokenGenerator>() });
+        lexer.addRule({ LessPattern , std::make_unique<lexer::LessTokenGenerator>() });
+        lexer.addRule({ LessEqPattern , std::make_unique<lexer::LessEqTokenGenerator>() });
+        lexer.addRule({ GreaterPattern , std::make_unique<lexer::GreaterTokenGenerator>() });
+        lexer.addRule({ GreaterEqPattern , std::make_unique<lexer::GreaterEqTokenGenerator>() });
     }
     catch (std::exception const& e)
     {
@@ -52,7 +72,7 @@ int main(int argc, char** argv)
 
     auto const tokens = lexer.lex("../../../../test.rogue");
 
-    for(auto const & token : tokens)
+    for (auto const& token : tokens)
     {
         std::cout << token->toString() << ' ';
     }
