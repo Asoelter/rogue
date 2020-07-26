@@ -19,7 +19,7 @@ std::string FileIO::readFile(const std::string& fileName)
 
     if(!ReadFile((void*)handle, (void*)rval.c_str(), fileSize, &numBytesRead, nullptr))
     {
-        unsigned err = GetLastError();
+        const unsigned err = GetLastError();
         char buf[256];
         snprintf(buf, 256, "Read File failed with error: %u", err);
         MessageBox(NULL, buf, "Error reading file", NULL);

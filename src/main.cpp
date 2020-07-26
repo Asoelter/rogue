@@ -1,14 +1,42 @@
-#include <cassert>
 #include <chrono>
 #include <iostream>
 
 #include <lexer/lexer.h>
 #include <lexer/token_generator.h>
 
-#include <util/file_io.h>
-
 int main(int argc, char** argv)
 {
+#ifdef USE_CUSTOM_REGEX
+
+    using namespace lexer;
+    auto lexer = lexer::Lexer();
+
+    lexer.addRule({ std::make_unique<IdRegex>(), std::make_unique<IdTokenGenerator>() });
+    lexer.addRule({ std::make_unique<IntRegex>(), std::make_unique<IntTokenGenerator>() });
+    lexer.addRule({ std::make_unique<StringRegex>("\r\n"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({ std::make_unique<WhitespaceRegex>(), nullptr });
+
+    lexer.addRule({ std::make_unique<StringRegex>("("), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>(")"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("{"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("}"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>(","), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("."), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>(";"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("+"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("+="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("-"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("-="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("*"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("*="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("/"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("/="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("<"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>("<="), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>(">"), std::make_unique<StringLitTokenGenerator>() });
+    lexer.addRule({std::make_unique<StringRegex>(">="), std::make_unique<StringLitTokenGenerator>() });
+#else
     auto const idPattern = "[a-z]([a-z]|[0-9])*";
     auto const intPattern = "0|([1-9][0-9]*)";
     auto const newlinePattern = "\r\n";
@@ -36,8 +64,6 @@ int main(int argc, char** argv)
     auto const GreaterEqPattern = ">=";
 
     auto lexer = lexer::Lexer();
-
-    assert(std::regex_match("hello", std::regex(idPattern)));
 
     try
     {
@@ -71,9 +97,10 @@ int main(int argc, char** argv)
         std::cout << e.what() << std::endl;
     }
 
+#endif
     auto const startTime = std::chrono::system_clock::now();
 
-    auto const tokens = lexer.lex("../../../../test.rogue");
+    auto const tokens = lexer.lex("../../../../small_test.rogue");
 
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();

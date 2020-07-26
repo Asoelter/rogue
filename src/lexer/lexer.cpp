@@ -11,6 +11,55 @@ void Lexer::addRule(Rule&& rule)
     rules_.emplace_back(std::move(rule));
 }
 
+#ifdef USE_CUSTOM_REGEX
+std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
+{
+    
+    auto contents = FileIO::readFile(fileName);
+    const char* chunkStart = &contents[0];
+    const char* chunkStop = &contents[0];
+    auto rval = std::vector<std::unique_ptr<Token>>();
+
+    for(auto & rule : rules_)
+    {
+        activeRules_.insert(&rule);
+    }
+
+    while (*chunkStop != '\0')
+    {
+        ++chunkStop;
+
+        for(auto it = activeRules_.begin(); it != activeRules_.end();)
+        {
+            auto oldIt = it;
+            ++it;
+
+            const auto status = (*oldIt)->pattern->on(*chunkStop);
+
+           if(status == RegexStatus::Rejected)
+           {
+               rejectedRules_.push(*oldIt);
+               activeRules_.erase(oldIt);
+           }
+        }
+
+        if(activeRules_.empty())
+        {
+            auto lastActiveRule = rejectedRules_.top();
+            rval.push_back(lastActiveRule->generator->generate(0, 0, std::string(chunkStart, chunkStop)));
+            chunkStart = chunkStop;
+
+            for(auto & rule : rules_)
+            {
+                rule.pattern->reset();
+                activeRules_.insert(&rule);
+            }
+        }
+    }
+
+    return rval;
+}
+#else
 std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 {
     auto contents = FileIO::readFile(fileName);
@@ -57,5 +106,6 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 
     return rval;
 }
+#endif
 
 LEXER_NAMESPACE_END
