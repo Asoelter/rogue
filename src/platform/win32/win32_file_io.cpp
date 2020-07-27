@@ -13,11 +13,10 @@ std::string FileIO::readFile(const std::string& fileName)
 
     const auto handle = OpenFile(fileName.c_str(), &fileStruct, OF_READ);
     auto const fileSize = GetFileSize((void*)handle, nullptr);
-    std::string rval;
-    rval.reserve(fileSize);
+    char* buffer = new char[fileSize];
     DWORD numBytesRead;
 
-    if(!ReadFile((void*)handle, (void*)rval.c_str(), fileSize, &numBytesRead, nullptr))
+    if(!ReadFile((void*)handle, (void*)buffer, fileSize, &numBytesRead, nullptr))
     {
         const unsigned err = GetLastError();
         char buf[256];
@@ -25,5 +24,5 @@ std::string FileIO::readFile(const std::string& fileName)
         MessageBox(NULL, buf, "Error reading file", NULL);
     }
 
-    return rval;
+    return std::string(buffer, buffer + fileSize);
 }

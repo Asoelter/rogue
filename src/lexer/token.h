@@ -120,15 +120,16 @@ using GreaterEqToken = SymbolToken<Symbol::GreaterEq>;
 template<Keyword K>
 using KeywordToken = EnumeratedToken<Keyword, K>;
 
-using IfToken    = KeywordToken<Keyword::If>;
-using ElseToken  = KeywordToken<Keyword::Else>;
-using WhileToken = KeywordToken<Keyword::While>;
-using ForToken   = KeywordToken<Keyword::For>;
-using IntToken   = KeywordToken<Keyword::Int>;
-using CharToken  = KeywordToken<Keyword::Char>;
-using BoolToken  = KeywordToken<Keyword::Bool>;
-using TrueToken  = KeywordToken<Keyword::True>;
-using FalseToken = KeywordToken<Keyword::False>;
+using IfToken     = KeywordToken<Keyword::If>;
+using ElseToken   = KeywordToken<Keyword::Else>;
+using WhileToken  = KeywordToken<Keyword::While>;
+using ForToken    = KeywordToken<Keyword::For>;
+using IntToken    = KeywordToken<Keyword::Int>;
+using CharToken   = KeywordToken<Keyword::Char>;
+using BoolToken   = KeywordToken<Keyword::Bool>;
+using TrueToken   = KeywordToken<Keyword::True>;
+using FalseToken  = KeywordToken<Keyword::False>;
+using RetrunToken = KeywordToken<Keyword::Return>;
 
 LEXER_NAMESPACE_END
 

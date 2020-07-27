@@ -46,11 +46,11 @@ std::string DerivedToken<T, ForIdGen>::toString() const
 {
     if constexpr (std::is_arithmetic_v<T>)
     {
-        return std::to_string(value_);
+        return "[Intlit: " + std::to_string(value_) + ']';
     }
     else if constexpr (std::is_same_v<T, std::string> || std::is_same_v<T, const char *>)
     {
-        return value_;
+        return "[Strlit: " + value_ + ']';
     }
     else
     {
@@ -80,7 +80,7 @@ type_id EnumeratedToken<T, V>::type() const
 template<typename T, T V>
 std::string EnumeratedToken<T, V>::toString() const
 {
-    return lexer::toString(V);
+    return '[' + lexer::toString(V) + ']';
 }
 
 template<typename T, T V>

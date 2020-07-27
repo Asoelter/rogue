@@ -17,23 +17,25 @@ enum class Keyword
     Char, 
     Bool, 
     True,
-    False
+    False,
+    Return
 };
 
 inline std::string toString(Keyword k)
 {
     switch (k)
     {
-    case Keyword::If:    return "If";
-    case Keyword::Else:  return "Else";
-    case Keyword::While: return "While";
-    case Keyword::For:   return "For";
-    case Keyword::Int:   return "Int";
-    case Keyword::Char:  return "Char";
-    case Keyword::Bool:  return "Bool";
-    case Keyword::True:  return "True";
-    case Keyword::False: return "False";
-    default:             return "Unkown";
+    case Keyword::If:     return "If";
+    case Keyword::Else:   return "Else";
+    case Keyword::While:  return "While";
+    case Keyword::For:    return "For";
+    case Keyword::Int:    return "Int";
+    case Keyword::Char:   return "Char";
+    case Keyword::Bool:   return "Bool";
+    case Keyword::True:   return "True";
+    case Keyword::False:  return "False";
+    case Keyword::Return: return "Return";
+    default:              return "Unkown";
     }
 }
 

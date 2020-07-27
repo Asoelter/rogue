@@ -11,101 +11,91 @@ void Lexer::addRule(Rule&& rule)
     rules_.emplace_back(std::move(rule));
 }
 
-#ifdef USE_CUSTOM_REGEX
 std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 {
     
     auto contents = FileIO::readFile(fileName);
     const char* chunkStart = &contents[0];
     const char* chunkStop = &contents[0];
+    auto const lastIndex = contents.size() - 1;
+    const char* end = &contents[lastIndex];
+    size_t line = 0;
+    size_t column = 0;
     auto rval = std::vector<std::unique_ptr<Token>>();
 
-    for(auto & rule : rules_)
+    resetActiveRules();
+
+    while (chunkStart <= end)
     {
-        activeRules_.insert(&rule);
-    }
-
-    while (*chunkStop != '\0')
-    {
-        ++chunkStop;
-
-        for(auto it = activeRules_.begin(); it != activeRules_.end();)
-        {
-            auto oldIt = it;
-            ++it;
-
-            const auto status = (*oldIt)->pattern->on(*chunkStop);
-
-           if(status == RegexStatus::Rejected)
-           {
-               rejectedRules_.push(*oldIt);
-               activeRules_.erase(oldIt);
-           }
-        }
+        updateLineAndColumn(*chunkStart, line, column);
+        updateActiveRules(*chunkStop);
 
         if(activeRules_.empty())
         {
             auto lastActiveRule = rejectedRules_.top();
-            rval.push_back(lastActiveRule->generator->generate(0, 0, std::string(chunkStart, chunkStop)));
+
+            if (lastActiveRule && lastActiveRule->generator)
+            {
+                rval.push_back(lastActiveRule->generator->generate(line, column, std::string(chunkStart, chunkStop)));
+            }
+
             chunkStart = chunkStop;
 
-            for(auto & rule : rules_)
-            {
-                rule.pattern->reset();
-                activeRules_.insert(&rule);
-            }
+            resetActiveRules();
+        }
+        else
+        {
+            ++chunkStop;
         }
     }
 
     return rval;
 }
-#else
-std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
+
+void Lexer::resetActiveRules()
 {
-    auto contents = FileIO::readFile(fileName);
-    const char* chunkStart = &contents[0];
-    const char* chunkStop = &contents[0];
-    auto rval = std::vector<std::unique_ptr<Token>>();
-
-    while (*chunkStop != '\0')
+    for(auto & rule : rules_)
     {
-        int numMatches = 0;
-        ++chunkStop;
-        bool first = true;
+        rule.pattern->reset();
+        activeRules_.insert(&rule);
+    }
+}
 
-        for (auto& rule : rules_)
+void Lexer::updateActiveRules(char c)
+{
+    for(auto it = activeRules_.begin(); it != activeRules_.end();)
+    {
+        auto oldIt = it;
+        ++it;
+
+        const auto status = (*oldIt)->pattern->on(c);
+
+        if(status == RegexStatus::Rejected)
         {
-            if (std::regex_match(chunkStart, chunkStop, rule.pattern))
-            {
-                if (first)
-                {
-                    //only clear matches when we
-                    //know more are coming
-                    matches_.clear();
-                }
-
-                matches_.push_back(&rule);
-                ++numMatches;
-            }
-        }
-
-        if (numMatches == 0 && !matches_.empty())
-        {
-            auto lastMatch = matches_.front();
-
-            if (lastMatch->generator)
-            {
-                rval.push_back(lastMatch->generator->generate(0, 0, std::string(chunkStart, chunkStop - 1)));
-            }
-
-            chunkStop -= 1; //rewind to include first non-match in the next chunk
-            chunkStart = chunkStop;
-            matches_.clear();
+            rejectedRules_.push(*oldIt);
+            activeRules_.erase(oldIt);
         }
     }
-
-    return rval;
 }
-#endif
+
+void Lexer::updateLineAndColumn(char c, size_t& line, size_t& column)
+{
+    switch (c)
+    {
+    case '\t': 
+    {
+        column += 8;
+    } break;
+    case '\n':
+    {
+        line += 1;
+        column = 0;
+    } break;
+    default:
+    {
+        column += 1;
+    } break;
+    }
+}
 
 LEXER_NAMESPACE_END

@@ -80,15 +80,16 @@ using GreaterEqTokenGenerator = SymbolTokenGenerator<Symbol::GreaterEq>;
 template<Keyword K>
 using KeywordTokenGenerator = EnumeratedTokenGenerator<Keyword, K>;
 
-using IfTokenGenerator    = KeywordTokenGenerator<Keyword::If>;
-using ElseTokenGenerator  = KeywordTokenGenerator<Keyword::Else>;
-using WhileTokenGenerator = KeywordTokenGenerator<Keyword::While>;
-using ForTokenGenerator   = KeywordTokenGenerator<Keyword::For>;
-using IntTokenGenerator   = KeywordTokenGenerator<Keyword::Int>;
-using CharTokenGenerator  = KeywordTokenGenerator<Keyword::Char>;
-using BoolTokenGenerator  = KeywordTokenGenerator<Keyword::Bool>;
-using TrueTokenGenerator  = KeywordTokenGenerator<Keyword::True>;
-using FalseTokenGenerator = KeywordTokenGenerator<Keyword::False>;
+using IfTokenGenerator     = KeywordTokenGenerator<Keyword::If>;
+using ElseTokenGenerator   = KeywordTokenGenerator<Keyword::Else>;
+using WhileTokenGenerator  = KeywordTokenGenerator<Keyword::While>;
+using ForTokenGenerator    = KeywordTokenGenerator<Keyword::For>;
+using IntTokenGenerator    = KeywordTokenGenerator<Keyword::Int>;
+using CharTokenGenerator   = KeywordTokenGenerator<Keyword::Char>;
+using BoolTokenGenerator   = KeywordTokenGenerator<Keyword::Bool>;
+using TrueTokenGenerator   = KeywordTokenGenerator<Keyword::True>;
+using FalseTokenGenerator  = KeywordTokenGenerator<Keyword::False>;
+using ReturnTokenGenerator = KeywordTokenGenerator<Keyword::Return>;
 
 LEXER_NAMESPACE_END
 

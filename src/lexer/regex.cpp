@@ -30,7 +30,7 @@ RegexStatus IdRegex::on(char value)
     {
     case RegexStatus::NotStarted:
     {
-        const auto isAlpha = std::isalpha(value);
+        const auto isAlpha = std::isalpha(static_cast<unsigned char>(value));
         const auto isValid = static_cast<bool>(isAlpha);
         status_ = isValid ? RegexStatus::Accepted : RegexStatus::Rejected;
         break;
@@ -62,7 +62,7 @@ RegexStatus IntRegex::on(char value)
     {
     case RegexStatus::NotStarted:
     {
-        auto isValid = std::isdigit(value) && value != 0;
+        auto isValid = std::isdigit(static_cast<unsigned char>(value));
         status_ = isValid ? RegexStatus::Accepted : RegexStatus::Rejected;
         break;
     }
@@ -90,51 +90,21 @@ WhitespaceRegex::WhitespaceRegex()
 
 RegexStatus WhitespaceRegex::on(char value)
 {
-    switch(status_)
+    switch (status_)
     {
     case RegexStatus::NotStarted:
     {
-        const auto isValid = value == ' ' || value == '\\';
-        status_ = isValid ? RegexStatus::Continuing : RegexStatus::Rejected;
-
-        break;
-    }
+        const auto isValid = value == ' ' || value == '\t' || value == '\n' || value == '\r';
+        status_ = isValid ? RegexStatus::Accepted : RegexStatus::Rejected;
+    } break;
     case RegexStatus::Accepted:
+    case RegexStatus::Continuing:
+    case RegexStatus::Rejected: 
     {
         status_ = RegexStatus::Rejected;
-        break;
-    }
-    case RegexStatus::Continuing:
-    {
-        auto isValid = false;
-        auto isFinal = false;
-
-        if(lastChar_ == ' ')
-        {
-            isValid = value == '\\' || value == ' ';
-        }
-        else if(lastChar_ == 'r')
-        {
-            isValid = value == '\\';
-        }
-        else if(lastChar_ == '\\')
-        {
-            isValid = value == 't' || value == 'n' || value == 'r';
-            isFinal = isValid && value == 't' || value == 'n';
-        }
-
-        status_ = isValid ? RegexStatus::Continuing : RegexStatus::Rejected;
-        status_ = isFinal ? RegexStatus::Accepted : status_;
-
-        break;
-    }
-    case RegexStatus::Rejected:
-    {
-        break;
-    }
+    } break;
     }
 
-    lastChar_ = value;
     return status_;
 }
 
@@ -151,21 +121,16 @@ RegexStatus StringRegex::on(char value)
     switch(status_)
     {
     case RegexStatus::NotStarted:
+    case RegexStatus::Continuing:
     {
-        status_ = value == value_[0] ? RegexStatus::Continuing : RegexStatus::Rejected;
+        const auto nextState = expectedIndex_ == value_.size() - 1 ? RegexStatus::Accepted : RegexStatus::Continuing;
+        status_ = value == value_[expectedIndex_] ? nextState : RegexStatus::Rejected;
         ++expectedIndex_;
         break;
     }
     case RegexStatus::Accepted:
     {
         status_ = RegexStatus::Rejected;
-        break;
-    }
-    case RegexStatus::Continuing:
-    {
-        const auto nextState = expectedIndex_ == value_.size() - 1 ? RegexStatus::Accepted : RegexStatus::Continuing;
-        status_ = value == value_[expectedIndex_] ? nextState : RegexStatus::Rejected;
-        ++expectedIndex_;
         break;
     }
     case RegexStatus::Rejected:
