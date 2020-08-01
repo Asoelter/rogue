@@ -83,7 +83,6 @@ RegexStatus IntRegex::on(char value)
 
 WhitespaceRegex::WhitespaceRegex()
     : Regex()
-    , lastChar_('\0')
 {
     
 }
@@ -108,7 +107,7 @@ RegexStatus WhitespaceRegex::on(char value)
     return status_;
 }
 
-StringRegex::StringRegex(std::string value)
+KeywordRegex::KeywordRegex(std::string value)
     : Regex()
     , value_(std::move(value))
     , expectedIndex_(0)
@@ -116,7 +115,7 @@ StringRegex::StringRegex(std::string value)
     
 }
 
-RegexStatus StringRegex::on(char value)
+RegexStatus KeywordRegex::on(char value)
 {
     switch(status_)
     {
@@ -142,7 +141,7 @@ RegexStatus StringRegex::on(char value)
     return status_;
 }
 
-void StringRegex::reset() noexcept
+void KeywordRegex::reset() noexcept
 {
     Regex::reset();
     expectedIndex_ = 0;

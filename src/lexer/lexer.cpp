@@ -13,15 +13,14 @@ void Lexer::addRule(Rule&& rule)
 
 std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 {
-    
-    auto contents = FileIO::readFile(fileName);
+    auto contents          = FileIO::readFile(fileName);
     const char* chunkStart = &contents[0];
-    const char* chunkStop = &contents[0];
-    auto const lastIndex = contents.size() - 1;
-    const char* end = &contents[lastIndex];
-    size_t line = 0;
-    size_t column = 0;
-    auto rval = std::vector<std::unique_ptr<Token>>();
+    const char* chunkStop  = &contents[0];
+    auto const lastIndex   = contents.size() - 1;
+    const char* end        = &contents[lastIndex];
+    size_t line            = 0;
+    size_t column          = 0;
+    auto rval              = std::vector<std::unique_ptr<Token>>();
 
     resetActiveRules();
 
@@ -32,7 +31,7 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 
         if(activeRules_.empty())
         {
-            auto lastActiveRule = rejectedRules_.top();
+            auto* lastActiveRule = rejectedRules_.top();
 
             if (lastActiveRule && lastActiveRule->generator)
             {

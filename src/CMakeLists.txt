@@ -5,9 +5,11 @@ cmake_minimum_required (VERSION 3.8)
 
 add_executable (rogue  main.cpp)
 
-if(CMAKE_CONFIGURATION_TYPES STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	add_compile_definitions(DEBUG=1)
-endif(CMAKE_CONFIGURATION_TYPES STREQUAL "Debug")
+else()
+	message("Compile definition is " + ${CMAKE_CONFIGURATION_TYPES})
+endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 function(addDirectory dir)
 	add_subdirectory(${dir})

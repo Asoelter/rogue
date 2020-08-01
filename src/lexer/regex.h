@@ -47,15 +47,12 @@ public:
     WhitespaceRegex();
 
     RegexStatus on(char value) override;
-
-private:
-    char lastChar_;
 };
 
-class StringRegex : public Regex
+class KeywordRegex : public Regex
 {
 public: 
-    StringRegex(std::string value);
+    KeywordRegex(std::string value);
 
     RegexStatus on(char value) override;
     void reset() noexcept override;
@@ -63,6 +60,15 @@ public:
 private:
     std::string value_;
     unsigned expectedIndex_;
+};
+
+class StringRegex : public Regex
+{
+public:
+    StringRegex();
+
+    RegexStatus on(char value) override;
+    void reset() noexcept override;
 };
 
 #endif //REGEX_H
