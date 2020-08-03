@@ -3,7 +3,7 @@
 
 #include <string>
 
-enum class RegexStatus
+enum class RegexStatus : uint8_t
 {
     NotStarted,
     Rejected,
@@ -18,7 +18,7 @@ public:
     virtual ~Regex() = default;
 
     virtual RegexStatus on(char value) = 0;
-    RegexStatus status() const noexcept;
+    [[nodiscard]] RegexStatus status() const noexcept;
     virtual void reset() noexcept;
 
 protected:

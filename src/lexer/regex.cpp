@@ -146,3 +146,37 @@ void KeywordRegex::reset() noexcept
     Regex::reset();
     expectedIndex_ = 0;
 }
+StringRegex::StringRegex()
+    : Regex()
+{
+    
+}
+
+RegexStatus StringRegex::on(char value) 
+{
+    switch(status_)
+    {
+    case RegexStatus::NotStarted:
+    {
+        status_ = value == '\"' ? RegexStatus::Continuing : RegexStatus::Rejected;
+    } break;
+    case RegexStatus::Continuing:
+    {
+        const auto isValid = std::isalpha(static_cast<unsigned char>(value)) || std::isdigit(static_cast<unsigned char>(value));
+        status_ = isValid ? RegexStatus::Continuing : RegexStatus::Rejected;
+    } break;
+    case RegexStatus::Accepted:
+    {
+        status_ = RegexStatus::Rejected;
+    } break;
+    case RegexStatus::Rejected: break;
+    }
+
+    return status_;
+}
+
+void StringRegex::reset() noexcept
+{
+    
+}
+
