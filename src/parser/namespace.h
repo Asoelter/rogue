@@ -1,0 +1,20 @@
+#ifndef PARSER_NAMESPACE_H
+#define PARSER_NAMESPACE_H
+
+#ifndef PARSER_NAMESPACE
+#   define PARSER_NAMESPACE parser
+#endif 
+
+#ifndef PARSER_NAMESPACE_BEGIN
+#   define PARSER_NAMESPACE_BEGIN namespace PARSER_NAMESPACE{
+#endif 
+
+#ifndef PARSER_NAMESPACE_END
+#   define PARSER_NAMESPACE_END }
+#endif 
+
+#ifndef USE_PARSER_NAMESPACE
+#   define USE_PARSER_NAMESPACE using namespace PARSER_NAMESPACE;
+#endif
+
+#endif //PARSER_NAMESPACE_H

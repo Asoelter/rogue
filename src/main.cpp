@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 
     auto const startTime = std::chrono::system_clock::now();
 
-    auto const tokens = lexer.lex("../../../../../small_test.rogue");
+    auto const tokens = lexer.lex("../../../../../test.rogue");
 
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();

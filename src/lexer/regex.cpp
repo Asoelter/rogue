@@ -162,7 +162,7 @@ RegexStatus StringRegex::on(char value)
     } break;
     case RegexStatus::Continuing:
     {
-        const auto isValid = std::isalpha(static_cast<unsigned char>(value)) 
+        const auto isValid =  std::isalpha(static_cast<unsigned char>(value)) 
                            || std::isdigit(static_cast<unsigned char>(value))
                            || value == '\"';
         const auto isFinal = value == '\"';

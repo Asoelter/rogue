@@ -1,7 +1,7 @@
 #ifndef FILE_IO_H
 #define FILE_IO_H
 
-#if defined(WIN32) || defined(__WIN32__) || defined(__CYGWIN32__) || defined(_MSC_VER)
+#ifdef ROGUE_PLATFORM_WINDOWS
 #   include <platform/win32/win32_file_io.h>
 #endif
 
