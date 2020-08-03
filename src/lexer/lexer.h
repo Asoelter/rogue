@@ -39,7 +39,7 @@ public:
 
 private:
     void resetActiveRules();
-    void updateActiveRules(char c);
+    bool updateActiveRules(char c);
     void updateLineAndColumn(char c, size_t& line, size_t& column);
 
 private:

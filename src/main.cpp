@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 
     lexer.addRule({ std::make_unique<IdRegex>(), std::make_unique<IdTokenGenerator>() });
     lexer.addRule({ std::make_unique<IntRegex>(), std::make_unique<IntLitTokenGenerator>() });
+    lexer.addRule({ std::make_unique<StringRegex>(), std::make_unique<StringLitTokenGenerator>() });
     lexer.addRule({ std::make_unique<WhitespaceRegex>(), nullptr });
 
     lexer.addRule({ std::make_unique<KeywordRegex>("("), std::make_unique<LParenTokenGenerator>() });
@@ -49,7 +50,7 @@ int main(int argc, char** argv)
 
     auto const startTime = std::chrono::system_clock::now();
 
-    auto const tokens = lexer.lex("../../../../../test.rogue");
+    auto const tokens = lexer.lex("../../../../../small_test.rogue");
 
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();

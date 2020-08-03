@@ -1,5 +1,7 @@
 #include "lexer.h"
 
+#include <iostream>
+
 #include <util/file_io.h>
 
 #include "token.h"
@@ -21,16 +23,24 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
     size_t line            = 0;
     size_t column          = 0;
     auto rval              = std::vector<std::unique_ptr<Token>>();
+    auto aRuleHasAccepted  = false;
 
     resetActiveRules();
 
     while (chunkStart <= end)
     {
         updateLineAndColumn(*chunkStart, line, column);
-        updateActiveRules(*chunkStop);
+        aRuleHasAccepted = updateActiveRules(*chunkStop) || aRuleHasAccepted;
 
         if(activeRules_.empty())
         {
+            if (!aRuleHasAccepted)
+            {
+                std::cout << "[" << line << ", " << column 
+                          << "] Unable to parse string: " 
+                          << std::string(chunkStart, chunkStop) << std::endl;
+                break;
+            }
             auto* lastActiveRule = rejectedRules_.top();
 
             if (lastActiveRule && lastActiveRule->generator)
@@ -41,6 +51,7 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
             chunkStart = chunkStop;
 
             resetActiveRules();
+            aRuleHasAccepted = false;
         }
         else
         {
@@ -60,8 +71,10 @@ void Lexer::resetActiveRules()
     }
 }
 
-void Lexer::updateActiveRules(char c)
+bool Lexer::updateActiveRules(char c)
 {
+    bool ruleHasAccepted = false;
+
     for(auto it = activeRules_.begin(); it != activeRules_.end();)
     {
         auto oldIt = it;
@@ -74,7 +87,13 @@ void Lexer::updateActiveRules(char c)
             rejectedRules_.push(*oldIt);
             activeRules_.erase(oldIt);
         }
+        else if(status == RegexStatus::Accepted)
+        {
+            ruleHasAccepted = true;
+        }
     }
+
+    return ruleHasAccepted;
 }
 
 void Lexer::updateLineAndColumn(char c, size_t& line, size_t& column)
