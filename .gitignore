@@ -2,3 +2,7 @@ out
 out/*
 .vs
 .vs/*
+**/*.swp
+*.swp
+build
+build/*

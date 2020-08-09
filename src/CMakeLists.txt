@@ -13,6 +13,8 @@ endif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 if(WIN32)
 	add_compile_definitions(ROGUE_PLATFORM_WINDOWS=1)
+elseif(UNIX AND NOT APPLE)
+    add_definitions(-DROGUE_PLATFORM_LINUX)
 endif(WIN32)
 
 function(addDirectory dir)
@@ -27,4 +29,8 @@ addDirectory(parser)
 addDirectory(util)
 addDirectory(platform)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+if(WIN32)
+    set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+else()
+    set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+endif(WIN32)

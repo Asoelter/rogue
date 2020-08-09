@@ -5,10 +5,9 @@
 
 std::string FileIO::readFile(const std::string& fileName)
 {
-    FILE* fileHandle;
-    auto const errorCode = fopen_s(&fileHandle, fileName.c_str(), "r");
+    FILE* fileHandle = fopen(fileName.c_str(), "r");
 
-    if(errorCode != 0 || !fileHandle)
+    if(!fileHandle)
     {
         throw std::runtime_error("runtime_file_io.cpp: Could not open file");
     }

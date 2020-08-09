@@ -10,5 +10,10 @@ add_library(${PROJECT_NAME} lexer.h			  lexer.cpp
 							keyword.h 
 							regex.cpp)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+if(WIN32)
+    set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
+else()
+    set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+endif(WIN32)
+
 target_include_directories(${PROJECT_NAME} PUBLIC ../)

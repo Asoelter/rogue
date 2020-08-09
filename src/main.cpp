@@ -52,7 +52,11 @@ int main(int argc, char** argv)
 
     auto const startTime = std::chrono::system_clock::now();
 
+#ifdef ROGUE_PLATFORM_WINDOWS
     auto const tokens = lexer.lex("../../../../../test.rogue");
+#else
+    auto const tokens = lexer.lex("../test.rogue");
+#endif
 
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
@@ -64,6 +68,8 @@ int main(int argc, char** argv)
 
     std::cout << "lexing took " << duration << " ms" << std::endl;
 
+#ifdef ROGUE_PLATFORM_WINDOWS
     std::cin.get();
+#endif
     return 0;
 }
