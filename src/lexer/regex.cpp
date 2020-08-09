@@ -56,13 +56,14 @@ IntRegex::IntRegex()
 {
 }
 
+//TODO(asoelter): Handle signed values
 RegexStatus IntRegex::on(char value)
 {
     switch(status_)
     {
     case RegexStatus::NotStarted:
     {
-        auto isValid = std::isdigit(static_cast<unsigned char>(value));
+        const auto isValid = std::isdigit(static_cast<unsigned char>(value)) || value == '-';
         status_ = isValid ? RegexStatus::Accepted : RegexStatus::Rejected;
         break;
     }
@@ -166,8 +167,8 @@ RegexStatus StringRegex::on(char value)
                            || std::isdigit(static_cast<unsigned char>(value))
                            || value == '\"';
         const auto isFinal = value == '\"';
-        const auto nextSucessState = isFinal ? RegexStatus::Accepted : RegexStatus::Continuing;
-        status_ = isValid ? nextSucessState : RegexStatus::Rejected;
+        const auto nextSuccessState = isFinal ? RegexStatus::Accepted : RegexStatus::Continuing;
+        status_ = isValid ? nextSuccessState : RegexStatus::Rejected;
     } break;
     case RegexStatus::Accepted:
     {

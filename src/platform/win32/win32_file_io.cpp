@@ -24,5 +24,8 @@ std::string FileIO::readFile(const std::string& fileName)
         MessageBox(NULL, buf, "Error reading file", NULL);
     }
 
-    return std::string(buffer, buffer + fileSize);
+    auto rval = std::string(buffer, buffer + fileSize);
+    delete[] buffer;
+
+    return rval;
 }

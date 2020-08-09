@@ -3,7 +3,7 @@
 #
 cmake_minimum_required (VERSION 3.8)
 
-add_executable (rogue  main.cpp "parser/parser.h" "parser/parser.cpp" "parser/namespace.h")
+add_executable (rogue  main.cpp "parser/parser.h" "parser/parser.cpp" "parser/namespace.h"   "platform/runtime/runtime_file_io.h" "platform/runtime/runtime_file_io.cpp")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	add_compile_definitions(DEBUG=1)

@@ -1,5 +1,5 @@
-#ifndef TYPE_ID_GENERATOR_HPP
-#define TYPE_ID_GENERATOR_HPP
+#ifndef TYPE_ID_HPP
+#define TYPE_ID_HPP
 
 #include "id_generator.hpp"
 
@@ -15,4 +15,7 @@ struct TypeIdGenerator
     }
 };
 
-#endif //TYPE_ID_GENERATOR_HPP
+template<typename T>
+constexpr auto TypeId = TypeIdGenerator<T>::generate();
+
+#endif //TYPE_ID_HPP

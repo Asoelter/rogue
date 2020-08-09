@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <util/type_id_generator.hpp>
+#include <util/type_id.hpp>
 
 #include "keyword.h"
 #include "namespace.h"

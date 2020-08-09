@@ -4,12 +4,14 @@
 #include <lexer/lexer.h>
 #include <lexer/token_generator.h>
 
+#include <parser/parser.h>
+
 #include <util/allocator.h>
 
 int main(int argc, char** argv)
 {
     using namespace lexer;
-    auto lexer = lexer::Lexer();
+    auto lexer = Lexer();
 
     lexer.addRule({ std::make_unique<IdRegex>(), std::make_unique<IdTokenGenerator>() });
     lexer.addRule({ std::make_unique<IntRegex>(), std::make_unique<IntLitTokenGenerator>() });
