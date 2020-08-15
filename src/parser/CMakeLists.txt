@@ -3,7 +3,8 @@ cmake_minimum_required (VERSION 3.8)
 project("parser")
 
 # Add source to this project's executable.
-add_library(${PROJECT_NAME} parser.h parser.cpp)
+add_library(${PROJECT_NAME} namespace.h 
+                            parser.h parser.cpp)
 
 if(WIN32)
     set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

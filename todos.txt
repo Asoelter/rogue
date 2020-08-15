@@ -1,0 +1,3 @@
+Lexer Cleanup:
+	* Recognize bool lits
+	* Recognize negative numbers

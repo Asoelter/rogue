@@ -22,10 +22,13 @@ std::string FileIO::readFile(const std::string& fileName)
         char buf[256];
         snprintf(buf, 256, "Read File failed with error: %u", err);
         MessageBox(NULL, buf, "Error reading file", NULL);
+        CloseHandle(reinterpret_cast<HANDLE>(handle));
+        delete[] buffer;
     }
 
     auto rval = std::string(buffer, buffer + fileSize);
     delete[] buffer;
+    CloseHandle(reinterpret_cast<HANDLE>(handle));
 
     return rval;
 }

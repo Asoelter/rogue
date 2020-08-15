@@ -1,3 +1,5 @@
+#ifdef ROGUE_PLATFORM_RUNTIME
+
 #include "runtime_file_io.h"
 
 #include <cstdio>
@@ -19,12 +21,9 @@ std::string FileIO::readFile(const std::string& fileName)
     char* buffer = new char[fileSize];
     const auto amountRead = fread(buffer, sizeof(char), fileSize, fileHandle);
 
-    if(amountRead != fileSize)
-    {
-        throw std::runtime_error("runtime_file_io.cpp: Could not read all of file");
-    }
-
     auto rval = std::string(buffer, buffer + amountRead);
     delete[] buffer;
     return rval;
 }
+
+#endif
