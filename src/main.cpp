@@ -1,16 +1,21 @@
 #include <chrono>
 #include <iostream>
 
+#include <grammar/grammar_generator.h>
+
 #include <lexer/lexer.h>
 #include <lexer/token_generator.h>
 
-#include <parser/parser.h>
+#include <parser/ast_node.h>
 
-#include <util/allocator.h>
+void endProgram();
+std::string fromTestDir(const std::string& fileName);
 
 int main(int argc, char** argv)
 {
     using namespace lexer;
+    using namespace parser;
+
     auto lexer = Lexer();
 
     lexer.addRule({ std::make_unique<IdRegex>(), std::make_unique<IdTokenGenerator>() });
@@ -38,6 +43,10 @@ int main(int argc, char** argv)
     lexer.addRule({std::make_unique<KeywordRegex>("<="), std::make_unique<LessEqTokenGenerator>() });
     lexer.addRule({std::make_unique<KeywordRegex>(">"),  std::make_unique<GreaterTokenGenerator>() });
     lexer.addRule({std::make_unique<KeywordRegex>(">="), std::make_unique<GreaterEqTokenGenerator>() });
+    lexer.addRule({ std::make_unique<KeywordRegex>("|"), std::make_unique<PipeTokenGenerator>() });
+    lexer.addRule({ std::make_unique<KeywordRegex>("&"), std::make_unique<AmpersandTokenGenerator>() });
+    lexer.addRule({ std::make_unique<KeywordRegex>("||"), std::make_unique<OrTokenGenerator>() });
+    lexer.addRule({ std::make_unique<KeywordRegex>("&&"), std::make_unique<AndTokenGenerator>() });
 
     lexer.addRule({ std::make_unique<KeywordRegex>("if"),    std::make_unique<IfTokenGenerator>() });
     lexer.addRule({std::make_unique<KeywordRegex>("else"),   std::make_unique<ElseTokenGenerator>() });
@@ -52,24 +61,46 @@ int main(int argc, char** argv)
 
     auto const startTime = std::chrono::system_clock::now();
 
-#ifdef ROGUE_PLATFORM_WINDOWS
-    auto const tokens = lexer.lex("../../../../../test.rogue");
-#else
-    auto const tokens = lexer.lex("../test.rogue");
-#endif
+    auto const tokens = lexer.lex(fromTestDir("small_test.rogue"));
 
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
+    GrammarGenerator generator;
+
+    generator.addAlias<IntToken>("Int")
+        .addAlias<BoolToken>("Bool")
+        .addAlias<CharToken>("Char")
+        .addAlias<TypeNode>("Type");
+
+    generator.readSpec("../../../../../src/res/grammar.txt");
+
+#if 0
     for (auto const& token : tokens)
     {
         std::cout << token->toString() << '\n';
     }
+#endif
 
     std::cout << "lexing took " << duration << " ms" << std::endl;
 
+    endProgram();
+
+    return 0;
+}
+
+void endProgram()
+{
 #ifdef ROGUE_PLATFORM_WINDOWS
     std::cin.get();
 #endif
-    return 0;
+}
+
+std::string fromTestDir(const std::string& fileName)
+{
+#ifdef ROGUE_PLATFORM_WINDOWS
+    return "../../../../../" + fileName;
+#elif defined(ROGUE_PLATFORM_LINUX)
+    return "../" + fileName;
+#endif
 }

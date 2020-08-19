@@ -1,0 +1,7 @@
+VarDecl ::= Type Id ;
+
+Type ::= intToken
+		| boolToken
+		| stringToken
+
+Id ::= idToken

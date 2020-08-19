@@ -1,3 +1,7 @@
 Lexer Cleanup:
 	* Recognize bool lits
 	* Recognize negative numbers
+
+Data structures
+	* Custom string
+	* fixed size stack that constantly pushed the bottom once capacity is reached

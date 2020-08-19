@@ -11,6 +11,8 @@ LEXER_NAMESPACE_BEGIN
 class TokenGenerator
 {
 public:
+    using Ptr = std::unique_ptr<TokenGenerator>;
+
     virtual ~TokenGenerator() = default;
 
     virtual std::unique_ptr<Token> generate(size_t line, size_t column, const std::string& value) = 0;
@@ -76,6 +78,10 @@ using LessTokenGenerator      = SymbolTokenGenerator<Symbol::Less>;
 using LessEqTokenGenerator    = SymbolTokenGenerator<Symbol::LessEq>;
 using GreaterTokenGenerator   = SymbolTokenGenerator<Symbol::Greater>;
 using GreaterEqTokenGenerator = SymbolTokenGenerator<Symbol::GreaterEq>;
+using PipeTokenGenerator      = SymbolTokenGenerator<Symbol::Pipe>;
+using AmpersandTokenGenerator = SymbolTokenGenerator<Symbol::Ampersand>;
+using OrTokenGenerator        = SymbolTokenGenerator<Symbol::Or>;
+using AndTokenGenerator       = SymbolTokenGenerator<Symbol::And>;
 
 template<Keyword K>
 using KeywordTokenGenerator = EnumeratedTokenGenerator<Keyword, K>;

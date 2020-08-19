@@ -16,6 +16,6 @@ struct TypeIdGenerator
 };
 
 template<typename T>
-constexpr auto TypeId = TypeIdGenerator<T>::generate();
+const auto TypeId = TypeIdGenerator<T>::generate();
 
 #endif //TYPE_ID_HPP

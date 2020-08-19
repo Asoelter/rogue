@@ -22,7 +22,7 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
     const char* end        = &contents[lastIndex];
     size_t line            = 0;
     size_t column          = 0;
-    auto rval              = std::vector<std::unique_ptr<Token>>();
+    auto result              = std::vector<std::unique_ptr<Token>>();
     auto aRuleHasAccepted  = false;
 
     resetActiveRules();
@@ -45,7 +45,7 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
 
             if (lastActiveRule && lastActiveRule->generator)
             {
-                rval.push_back(lastActiveRule->generator->generate(line, column, std::string(chunkStart, chunkStop)));
+                result.push_back(lastActiveRule->generator->generate(line, column, std::string(chunkStart, chunkStop)));
             }
 
             chunkStart = chunkStop;
@@ -59,7 +59,7 @@ std::vector<std::unique_ptr<Token>> Lexer::lex(const std::string& fileName)
         }
     }
 
-    return rval;
+    return result;
 }
 
 void Lexer::resetActiveRules()

@@ -163,9 +163,7 @@ RegexStatus StringRegex::on(char value)
     } break;
     case RegexStatus::Continuing:
     {
-        const auto isValid =  std::isalpha(static_cast<unsigned char>(value)) 
-                           || std::isdigit(static_cast<unsigned char>(value))
-                           || value == '\"';
+        const auto isValid = validateCharacter(value);
         const auto isFinal = value == '\"';
         const auto nextSuccessState = isFinal ? RegexStatus::Accepted : RegexStatus::Continuing;
         status_ = isValid ? nextSuccessState : RegexStatus::Rejected;
@@ -183,5 +181,13 @@ RegexStatus StringRegex::on(char value)
 void StringRegex::reset() noexcept
 {
     status_ = RegexStatus::NotStarted;
+}
+
+bool StringRegex::validateCharacter(char c)
+{
+    return std::isalpha(static_cast<unsigned char>(c))
+        || std::isdigit(static_cast<unsigned char>(c))
+        || c == '\"'
+        || c == ' ';
 }
 

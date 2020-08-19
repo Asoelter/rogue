@@ -28,7 +28,11 @@ enum class Symbol
     Less,
     LessEq,
     Greater,
-    GreaterEq
+    GreaterEq,
+    Pipe,
+    Ampersand,
+    Or,
+    And,
 };
 
 inline std::string toString(Symbol s)
@@ -55,6 +59,10 @@ inline std::string toString(Symbol s)
     case Symbol::LessEq:    return "LessEq";
     case Symbol::Greater:   return "Greater";
     case Symbol::GreaterEq: return "GreaterEq";
+    case Symbol::Pipe:      return "Pipe";
+    case Symbol::Ampersand: return "Ampersand";
+    case Symbol::Or:        return "Or";
+    case Symbol::And:       return "And";
     default:                return "Unkown";
     }
 }

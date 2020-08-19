@@ -129,7 +129,7 @@ using CharToken   = KeywordToken<Keyword::Char>;
 using BoolToken   = KeywordToken<Keyword::Bool>;
 using TrueToken   = KeywordToken<Keyword::True>;
 using FalseToken  = KeywordToken<Keyword::False>;
-using RetrunToken = KeywordToken<Keyword::Return>;
+using ReturnToken = KeywordToken<Keyword::Return>;
 
 LEXER_NAMESPACE_END
 

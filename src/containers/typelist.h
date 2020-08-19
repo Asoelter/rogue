@@ -6,6 +6,7 @@
 template<typename ...Args>
 struct TypeList
 {
+    static constexpr auto size = sizeof...(Args);
 };
 
 //----------------------IsList-----------------------
@@ -17,7 +18,7 @@ template<typename ...Args>
 struct IsListT<TypeList<Args...>> : std::true_type {};
 
 template<typename List>
-using IsList = typename IsListT<List>::type;
+constexpr auto IsList = IsListT<List>::type::value;
 
 //----------------------Tail-----------------------
 

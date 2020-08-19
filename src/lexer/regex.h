@@ -15,7 +15,12 @@ class Regex
 {
 public:
     Regex();
+    Regex(const Regex&) = default;
+    Regex(Regex&&) = default;
     virtual ~Regex() = default;
+
+    Regex& operator=(const Regex&) = default;
+    Regex& operator=(Regex&&) = default;
 
     virtual RegexStatus on(char value) = 0;
     [[nodiscard]] RegexStatus status() const noexcept;
@@ -25,7 +30,7 @@ protected:
     RegexStatus status_;
 };
 
-class IdRegex : public Regex
+class IdRegex final : public Regex
 {
 public:
     IdRegex();
@@ -33,7 +38,7 @@ public:
     RegexStatus on(char value) override;
 };
 
-class IntRegex : public Regex
+class IntRegex final : public Regex
 {
 public:
     IntRegex();
@@ -41,7 +46,7 @@ public:
     RegexStatus on(char value) override;
 };
 
-class WhitespaceRegex : public Regex
+class WhitespaceRegex final : public Regex
 {
 public:
     WhitespaceRegex();
@@ -49,7 +54,7 @@ public:
     RegexStatus on(char value) override;
 };
 
-class KeywordRegex : public Regex
+class KeywordRegex final : public Regex
 {
 public: 
     KeywordRegex(std::string value);
@@ -62,13 +67,16 @@ private:
     unsigned expectedIndex_;
 };
 
-class StringRegex : public Regex
+class StringRegex final : public Regex
 {
 public:
     StringRegex();
 
     RegexStatus on(char value) override;
     void reset() noexcept override;
+
+private:
+    static bool validateCharacter(char c);
 };
 
 #endif //REGEX_H

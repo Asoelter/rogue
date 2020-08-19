@@ -1,10 +1,9 @@
 cmake_minimum_required (VERSION 3.8)
 
-project("parser")
+project("grammar")
 
 # Add source to this project's executable.
-add_library(${PROJECT_NAME} namespace.h 
-                            parser.h parser.cpp "production_rule.h" "production_rule.hpp" "production.h" "production.cpp" "ast_node.h")
+add_library(${PROJECT_NAME} grammar_generator.h grammar_generator.cpp)
 
 if(WIN32)
     set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)

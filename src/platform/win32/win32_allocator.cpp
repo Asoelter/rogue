@@ -37,9 +37,9 @@ LocalStackAllocator::LocalStackAllocator()
 
 void* LocalStackAllocator::allocate(size_t bytes)
 {
-    const auto rval = frontier_;
+    const auto result = frontier_;
     frontier_ += bytes;
-    return rval;
+    return result;
 }
 
 void LocalStackAllocator::deallocate(void* ptr)

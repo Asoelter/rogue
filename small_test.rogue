@@ -1,7 +1,7 @@
 int main()
 {
 	int x = 0;
-	x = "hello";
+	x = "hello ";
 
 	if(x < 5)
 	{

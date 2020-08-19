@@ -36,10 +36,10 @@ std::string FileIO::readFile(const std::string& fileName)
         throw std::runtime_error("linux_file_io.cpp: Could not read all of file");
     }
 
-    auto rval = std::string(buffer, buffer + bytesRead);
+    auto result = std::string(buffer, buffer + bytesRead);
 
     close(fileHandle);
     delete[] buffer;
 
-    return rval;
+    return result;
 }

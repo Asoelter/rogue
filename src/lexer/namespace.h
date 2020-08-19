@@ -17,4 +17,11 @@
 #   define USE_LEXER_NAMESPACE using namespace LEXER_NAMESPACE;
 #endif
 
+#ifndef LEXER_FORWARD_DECLARE
+#   define LEXER_FORWARD_DECLARE(name) \
+    LEXER_NAMESPACE_BEGIN              \
+    class name;                        \
+    LEXER_NAMESPACE_END
+#endif
+
 #endif //LEXER_NAMESPACE_H

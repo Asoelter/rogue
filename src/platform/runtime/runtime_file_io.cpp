@@ -21,9 +21,9 @@ std::string FileIO::readFile(const std::string& fileName)
     char* buffer = new char[fileSize];
     const auto amountRead = fread(buffer, sizeof(char), fileSize, fileHandle);
 
-    auto rval = std::string(buffer, buffer + amountRead);
+    auto result = std::string(buffer, buffer + amountRead);
     delete[] buffer;
-    return rval;
+    return result;
 }
 
 #endif

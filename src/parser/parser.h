@@ -10,10 +10,7 @@
 
 class Statement {};
 
-namespace LEXER_NAMESPACE
-{
-class Token;
-}
+LEXER_FORWARD_DECLARE(Token);
 
 PARSER_NAMESPACE_BEGIN
 
