@@ -16,7 +16,7 @@ public:
         UserDefined
     };
 
-    TypeNode(Type type) : type_(type) {}
+    explicit TypeNode(const Type type) : type_(type) {}
 
     Type type() const noexcept { return type_; }
 private:
@@ -25,7 +25,7 @@ private:
 };
 
 template<TypeNode::Type NodeType>
-struct TypeNodeTemplate final : public TypeNode
+struct TypeNodeTemplate final : TypeNode
 {
     TypeNodeTemplate() : TypeNode(NodeType) {}
 };

@@ -1,7 +1,10 @@
 VarDecl ::= Type Id ;
+End
 
 Type ::= intToken
 		| boolToken
 		| stringToken
+End
 
 Id ::= idToken
+End

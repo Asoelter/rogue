@@ -8,6 +8,26 @@
 
 #include <util/type_id.hpp>
 
+class ProductionRule
+{
+public:
+    ProductionRule() = default;
+
+    void addToSequence(type_id id)
+    {
+        typeSequence_.push_back(id);
+    }
+
+    template<typename T>
+    void addToSequence()
+    {
+        typeSequence_.push_back(TypeId<T>);
+    }
+
+private:
+    std::vector<type_id> typeSequence_;
+};
+
 class GrammarGenerator
 {
 public: 

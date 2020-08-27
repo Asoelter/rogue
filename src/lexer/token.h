@@ -30,6 +30,9 @@ public:
     virtual std::string toString() const = 0;
 
     [[nodiscard]]
+    virtual std::string toPlaneString() const = 0;
+
+    [[nodiscard]]
     size_t line() const;
 
     [[nodiscard]]
@@ -59,6 +62,9 @@ public:
     [[nodiscard]]
     std::string toString() const override;
 
+    [[nodiscard]]
+    std::string toPlaneString() const override;
+
     const T& value() const;
 
 private:
@@ -83,6 +89,9 @@ public:
 
     [[nodiscard]]
     std::string toString() const override;
+
+    [[nodiscard]]
+    std::string toPlaneString() const override;
 
     const T value() const;
 };

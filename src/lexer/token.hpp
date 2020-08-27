@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include "token.h"
 
 LEXER_NAMESPACE_BEGIN
 
@@ -59,6 +60,23 @@ std::string DerivedToken<T, ForIdGen>::toString() const
 }
 
 template<typename T, typename ForIdGen>
+inline std::string DerivedToken<T, ForIdGen>::toPlaneString() const
+{
+    if constexpr (std::is_arithmetic_v<T>)
+    {
+        return std::to_string(value_);
+    }
+    else if constexpr(std::is_convertible_v<T, std::string>)
+    {
+        return value_;
+    }
+    else
+    {
+        throw std::runtime_error("Unable to convert value to string");
+    }
+}
+
+template<typename T, typename ForIdGen>
 const T& DerivedToken<T, ForIdGen>::value() const
 {
     return value_;
@@ -81,6 +99,12 @@ template<typename T, T V>
 std::string EnumeratedToken<T, V>::toString() const
 {
     return '[' + lexer::toString(V) + ']';
+}
+
+template<typename T, T V>
+inline std::string EnumeratedToken<T, V>::toPlaneString() const
+{
+    return lexer::toString(V);
 }
 
 template<typename T, T V>

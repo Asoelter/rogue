@@ -1,12 +1,12 @@
 #include <chrono>
 #include <iostream>
 
-#include <grammar/grammar_generator.h>
-
 #include <lexer/lexer.h>
 #include <lexer/token_generator.h>
 
 #include <parser/ast_node.h>
+#include <parser/production.h>
+#include <parser/production_rule.h>
 
 void endProgram();
 std::string fromTestDir(const std::string& fileName);
@@ -66,23 +66,15 @@ int main(int argc, char** argv)
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
-    GrammarGenerator generator;
+    auto const type = makeRule<IntToken, BoolToken, CharToken>();
+    auto const varDecl = makeRule<TypeNode, IdentifierToken>();
 
-    generator.addAlias<IntToken>("Int")
-        .addAlias<BoolToken>("Bool")
-        .addAlias<CharToken>("Char")
-        .addAlias<TypeNode>("Type");
-
-    generator.readSpec("../../../../../src/res/grammar.txt");
-
-#if 0
     for (auto const& token : tokens)
     {
         std::cout << token->toString() << '\n';
     }
-#endif
 
-    std::cout << "lexing took " << duration << " ms" << std::endl;
+    printf("lexing took %lld ms", duration);
 
     endProgram();
 

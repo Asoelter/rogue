@@ -12,7 +12,7 @@ PARSER_NAMESPACE_BEGIN
 class Production
 {
 public:
-    using RulePtr = std::unique_ptr<parser::ProductionRule> ;
+    using RulePtr = std::unique_ptr<ProductionRule> ;
 
     Production() = default;
     Production(const Production&) = default;
