@@ -5,7 +5,12 @@
 
 PARSER_NAMESPACE_BEGIN
 
-class TypeNode
+class AstNode
+{
+    
+};
+
+class TypeNode : public AstNode
 {
 public:
     enum class Type
@@ -18,6 +23,7 @@ public:
 
     explicit TypeNode(const Type type) : type_(type) {}
 
+    [[nodiscard]]
     Type type() const noexcept { return type_; }
 private:
 

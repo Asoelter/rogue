@@ -1,13 +1,15 @@
 #ifndef PRODUCTION_RULE_H
 #define PRODUCTION_RULE_H
 
+#include <functional>
 #include <unordered_set>
 
 #include <containers/capped_vector.h>
-#include <containers/typelist.h>
 
 #include <util/type_id.hpp>
 
+
+#include "ast_node.h"
 #include "namespace.h"
 
 PARSER_NAMESPACE_BEGIN
@@ -33,7 +35,15 @@ template<typename ... Args>
 class Rule final : public ProductionRule
 {
 public:
+    using Signature = std::function<std::unique_ptr<AstNode>(const std::unique_ptr<Args>& ...)>;
     Rule();
+    Rule(const Signature& onMatch)
+        : types_()
+        , onMatch_(onMatch)
+    {
+        
+    }
+        
     Rule(const Rule&) = default;
     Rule(Rule&&) = default;
     ~Rule() = default;
@@ -59,12 +69,13 @@ private:
 
 private:
     CappedVector <type_id, size> types_;
+    Signature onMatch_;
 };
 
 template<typename ... Args>
-std::unique_ptr<ProductionRule> makeRule()
+std::unique_ptr<ProductionRule> makeRule(const typename Rule<Args...>::Signature& onMatch)
 {
-    return std::make_unique<Rule<Args...>>();
+    return std::make_unique<Rule<Args...>>(onMatch);
 }
 
 PARSER_NAMESPACE_END

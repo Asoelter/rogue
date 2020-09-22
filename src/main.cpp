@@ -66,8 +66,15 @@ int main(int argc, char** argv)
     auto const endTime = std::chrono::system_clock::now();
     auto const duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
+    auto const newType = makeRule<IntToken>(std::function([](const std::unique_ptr<IntToken>& t)
+    {
+        return std::make_unique<AstNode>();
+    }));
+
+#if 0
     auto const type = makeRule<IntToken, BoolToken, CharToken>();
     auto const varDecl = makeRule<TypeNode, IdentifierToken>();
+#endif
 
     for (auto const& token : tokens)
     {
