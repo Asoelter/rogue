@@ -1,6 +1,8 @@
 #ifndef ID_GENERATOR_H
 #define ID_GENERATOR_H
 
+#include <stddef.h>
+
 using id_type = size_t;
 
 class IdGenerator

@@ -1,3 +1,6 @@
+#ifndef PARSER_NAMESPACE_BEGIN
+#   include "namespace.h"
+#endif
 
 PARSER_NAMESPACE_BEGIN
 

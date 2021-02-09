@@ -1,6 +1,8 @@
 #ifndef ROGUE_STRING_H
 #define ROGUE_STRING_H
 
+#include <stddef.h>
+
 // 4 bytes 
 
 class String

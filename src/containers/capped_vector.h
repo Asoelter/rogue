@@ -1,6 +1,7 @@
 #ifndef CAPPED_VECTOR_H
 #define CAPPED_VECTOR_H
 
+#include <stddef.h>
 #include <initializer_list>
 
 template<typename T, size_t Cap>

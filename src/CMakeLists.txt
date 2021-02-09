@@ -21,7 +21,7 @@ else()
 	add_definitions(-DROGUE_PLATFORM_RUNTIME)
 endif(WIN32)
 
-add_compile_definitions(ROGUE_RESOURCE_DIRECTORY="res")
+add_definitions(-DROGUE_RESOURCE_DIRECTORY="res")
 
 function(addDirectory dir)
 	add_subdirectory(${dir})

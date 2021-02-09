@@ -48,6 +48,16 @@ struct HeadT<TypeList<Head, Tail...>>
 template<typename List>
 using Head = typename HeadT<List>::type;
 
+//-------------------RemoveCVRef--------------------
+template<typename T>
+struct RemoveCVRefT
+{
+    using type = std::remove_cv_t<std::remove_reference_t<T>>;
+};
+
+template<typename T>
+using RemoveCVRef = typename RemoveCVRefT<T>::type;
+
 //-------------------AreSimilar--------------------
 
 template<typename LhsList, typename RhsList>
@@ -75,7 +85,7 @@ struct AreSimilarT<TypeList<T>, TypeList<>>
 template<typename T, typename U>
 struct AreSimilarT<TypeList<T>, TypeList<U>>
 {
-    static constexpr bool value = std::is_convertible_v<std::remove_cvref_t<T>, std::remove_cvref_t<U>>;
+    static constexpr bool value = std::is_convertible_v<RemoveCVRef<T>, RemoveCVRef<U>>;
 };
 
 template<typename LhsList, typename RhsList>
@@ -84,8 +94,8 @@ struct AreSimilarT
     static_assert(IsListT<LhsList>::value && IsListT<RhsList>::value);
 
     static constexpr bool value = std::is_convertible_v<
-        std::remove_cvref_t<Head<RhsList>>, 
-        std::remove_cvref_t<Head<LhsList>>
+        RemoveCVRef<Head<RhsList>>, 
+        RemoveCVRef<Head<LhsList>>
     > && AreSimilarT<Tail<LhsList>, Tail<RhsList>>::value;
 };
 
@@ -108,7 +118,7 @@ struct ContainsT
 {
     static_assert(IsListT<List>::value);
 
-    static constexpr bool value = std::is_same_v<std::remove_cvref_t<Head<List>>, std::remove_cvref_t<T>>
+    static constexpr bool value = std::is_same_v<RemoveCVRef<Head<List>>, RemoveCVRef<T>>
         || ContainsT<Tail<List>, T>::value;
 };
 

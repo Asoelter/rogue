@@ -81,7 +81,7 @@ int main(int argc, char** argv)
         std::cout << token->toString() << '\n';
     }
 
-    printf("lexing took %lld ms", duration);
+    printf("lexing took %ld ms", duration);
 
     endProgram();
 

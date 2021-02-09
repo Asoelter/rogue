@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/adam/workspace/rogue/build/src",
+  "command": "/usr/bin/c++  -DROGUE_PLATFORM_LINUX -I/home/adam/workspace/rogue/src/lexer -I/home/adam/workspace/rogue/src/parser -I/home/adam/workspace/rogue/src/util -I/home/adam/workspace/rogue/src/platform -I/home/adam/workspace/rogue/src/lexer/.. -I/home/adam/workspace/rogue/src/parser/.. -I/home/adam/workspace/rogue/src/util/.. -I/home/adam/workspace/rogue/src/platform/linux    -std=gnu++1z -o CMakeFiles/rogue.dir/main.cpp.o -c /home/adam/workspace/rogue/src/main.cpp",
+  "file": "/home/adam/workspace/rogue/src/main.cpp"
+},
+{
+  "directory": "/home/adam/workspace/rogue/build/src",
+  "command": "/usr/bin/c++  -DROGUE_PLATFORM_LINUX -I/home/adam/workspace/rogue/src/lexer -I/home/adam/workspace/rogue/src/parser -I/home/adam/workspace/rogue/src/util -I/home/adam/workspace/rogue/src/platform -I/home/adam/workspace/rogue/src/lexer/.. -I/home/adam/workspace/rogue/src/parser/.. -I/home/adam/workspace/rogue/src/util/.. -I/home/adam/workspace/rogue/src/platform/linux    -std=gnu++1z -o CMakeFiles/rogue.dir/platform/runtime/runtime_file_io.cpp.o -c /home/adam/workspace/rogue/src/platform/runtime/runtime_file_io.cpp",
+  "file": "/home/adam/workspace/rogue/src/platform/runtime/runtime_file_io.cpp"
+}
+]

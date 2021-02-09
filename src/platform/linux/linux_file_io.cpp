@@ -9,6 +9,8 @@
 
 std::string FileIO::readFile(const std::string& fileName)
 {
+    printf("[NOTE] attempting to open file %s\n", fileName.c_str());
+    fflush(stdout);
     auto const fileHandle = open(fileName.c_str(), O_RDONLY);
 
     if(fileHandle < 0)

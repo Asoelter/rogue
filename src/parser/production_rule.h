@@ -2,12 +2,13 @@
 #define PRODUCTION_RULE_H
 
 #include <functional>
+#include <memory>
 #include <unordered_set>
 
 #include <containers/capped_vector.h>
+#include <containers/typelist.h>
 
 #include <util/type_id.hpp>
-
 
 #include "ast_node.h"
 #include "namespace.h"

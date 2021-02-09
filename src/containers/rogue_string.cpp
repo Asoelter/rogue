@@ -147,7 +147,12 @@ void String::reserve(size_t size)
         return;
     }
 
+#ifdef ROGUE_PLATFORM_WINDOWS
     representation_.largeRep.buffer = GlobalAllocator::allocate<char>(size);
+#else
+    assert(false && "GlobalAllocator needs to be created for linux");
+    representation_.largeRep.buffer = new char[size];
+#endif
     representation_.largeRep.size = size;
     representation_.largeRep.capacity = 2 * size;
 }
